@@ -41,10 +41,10 @@ public class TankDrive extends LinearOpMode {
     // Declare OpMode members.
     ElapsedTime runtime = new ElapsedTime();
 
-    DcMotor leftDrive;
-    DcMotor rightDrive;
+    protected DcMotor leftDrive;
+    protected DcMotor rightDrive;
 
-    void setup() {
+    protected void setup() {
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
@@ -63,7 +63,7 @@ public class TankDrive extends LinearOpMode {
         while (opModeIsActive()) {
             if (gamepad1.right_stick_x != 0f) {
                 // Turning
-                leftDrive.setPower(gamepad1.right_stick_x * -1);
+                leftDrive.setPower(-gamepad1.right_stick_x);
                 rightDrive.setPower(gamepad1.right_stick_x);
             } else {
                 // Forward and Backwards
