@@ -14,12 +14,10 @@ import java.util.Map;
 
 public class Section {
     private final Script context;
-    private final String name;
     private final ArrayList<Pair<Instruction, List<String>>> instructions = new ArrayList<>();
 
-    public Section(List<Map<String, ?>> instructionList, Script context, String name) {
+    public Section(List<Map<String, ?>> instructionList, Script context) {
         this.context = context;
-        this.name = name;
         var i = 1;
         for (Map<String, ?> rawInstruction : instructionList) {
             Map.Entry<String, ?> entry = null;

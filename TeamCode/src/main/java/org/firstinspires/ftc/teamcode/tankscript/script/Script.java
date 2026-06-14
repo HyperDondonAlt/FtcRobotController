@@ -23,11 +23,13 @@ public class Script {
 
         val script = new Yaml(scriptFile);
 
-        for (Map.Entry<?, ?> entry : script.configData.entrySet()) {
-            if (entry.getValue() instanceof List) {
-                sections.put((String) entry.getKey(), new Section((List<Map<String, ?>>) entry.getValue(), this, (String) entry.getKey()));
+        // key = name
+        // value = values/instructions
+        for (Map.Entry<String, ?> section : script.configData.entrySet()) {
+            if (section.getValue() instanceof List) {
+                sections.put(section.getKey(), new Section((List<Map<String, ?>>) section.getValue(), this));
             } else {
-                telemetry.addData("Unable to parse section", entry.getKey());
+                telemetry.addData("Unable to parse section", section.getKey());
             }
         }
 
