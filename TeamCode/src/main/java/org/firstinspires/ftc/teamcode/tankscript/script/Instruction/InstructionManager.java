@@ -10,6 +10,8 @@ public final class InstructionManager {
     private static HashMap<String, Instruction> instructions = new HashMap<>(Map.of(
             "move", MoveInstruction.getInstance(),
             "turn", TurnInstruction.getInstance(),
-            "runSection", RunSectionInstruction.getInstance()
+            "runSection", RunSectionInstruction.getInstance(),
+            "wait", WaitInstruction.getInstance(),
+            "telemetry", TelemetryInstruction.getInstance()
     ));
 }

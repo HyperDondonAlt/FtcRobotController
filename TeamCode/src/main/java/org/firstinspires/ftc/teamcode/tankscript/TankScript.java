@@ -6,7 +6,9 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import lombok.Getter;
@@ -21,6 +23,12 @@ public class TankScript extends TankDrive {
     private static DcMotor leftMotor;
     @Getter
     private static DcMotor rightMotor;
+
+    static HashMap<String, String> log = new HashMap<>();
+
+    public static void log(String name, String message) {
+        log.put(name, message);
+    }
 
     @Override
     public void runOpMode() {
@@ -41,34 +49,40 @@ public class TankScript extends TankDrive {
         }
 
         var selectedScript = 0;
+        var yPressed = false;
         var aPressed = false;
-        var bPressed = false;
 
 
         while (opModeIsActive()) {
+            if (!gamepad1.y) yPressed = false;
             if (!gamepad1.a) aPressed = false;
-            if (!gamepad1.b) bPressed = false;
 
             telemetry.addData("Available Scripts", availableScripts);
 
-            if (gamepad1.a && !aPressed) {
-                aPressed = true;
+            if (gamepad1.y && !yPressed) {
+                yPressed = true;
                 selectedScript++;
 
                 if (selectedScript == scripts.size()) selectedScript = 0;
             }
 
-            if (gamepad1.b && !bPressed) {
-                bPressed = true;
+            if (gamepad1.a && !aPressed) {
+                aPressed = true;
                 try {
+                    log.clear();
                     val script = new Script(scripts.get(selectedScript), telemetry);
                     script.execute();
+                    log("Execution Status", "Done.");
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
             }
 
             telemetry.addData("Selected Script", scripts.get(selectedScript).getName().replace(".tscript", ""));
+
+            for (Map.Entry<String, String> logEntry : log.entrySet()) {
+                telemetry.addData(logEntry.getKey(), logEntry.getValue());
+            }
 
             telemetry.update();
         }

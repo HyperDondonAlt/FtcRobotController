@@ -18,12 +18,12 @@ public final class MoveInstruction extends Instruction {
         long time = 0;
 
         if (arguments.size() == 2) {
-            leftSpeed = Double.parseDouble(arguments.get(0));
+            leftSpeed = -Double.parseDouble(arguments.get(0));
             rightSpeed = leftSpeed;
             time = Long.parseLong(arguments.get(1));
         } else if (arguments.size() == 3) {
-            leftSpeed = Double.parseDouble(arguments.get(0));
-            rightSpeed = Double.parseDouble(arguments.get(1));
+            leftSpeed = -Double.parseDouble(arguments.get(0));
+            rightSpeed = -Double.parseDouble(arguments.get(1));
             time = Long.parseLong(arguments.get(2));
         }
 
