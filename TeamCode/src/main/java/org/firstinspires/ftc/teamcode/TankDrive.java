@@ -32,6 +32,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import lombok.val;
@@ -60,6 +61,10 @@ public class TankDrive extends LinearOpMode {
     public void runOpMode() {
         setup();
 
+        val arm = hardwareMap.get(DcMotor.class, "armMotor");
+
+        val clawServo = hardwareMap.get(Servo.class, "clawServo");
+
         while (opModeIsActive()) {
             if (gamepad1.right_stick_x != 0f) {
                 // Turning
@@ -69,6 +74,20 @@ public class TankDrive extends LinearOpMode {
                 // Forward and Backwards
                 leftDrive.setPower(gamepad1.left_stick_y);
                 rightDrive.setPower(gamepad1.left_stick_y);
+            }
+
+            if (gamepad1.right_trigger > 0) {
+                arm.setPower(-gamepad1.right_trigger * 0.5);
+            } else if (gamepad1.left_trigger > 0) {
+                arm.setPower(gamepad1.left_trigger * 0.5);
+            } else {
+                arm.setPower(0);
+            }
+
+            if (gamepad1.right_bumper) {
+                clawServo.setPosition(1);
+            } else if (gamepad1.left_bumper) {
+                clawServo.setPosition(-1);
             }
         }
     }
