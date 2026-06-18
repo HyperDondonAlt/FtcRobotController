@@ -1,0 +1,8 @@
+start:
+  - move: 0.97, 1, 4400
+  - turn: right, 1, 540
+  - move: 1, 1, 3600
+  - turn: right, 1, 520
+  - move: 1, 0.98, 3000
+  - turn: left, 1, 430
+  - move: 1, 0.98, 4000
